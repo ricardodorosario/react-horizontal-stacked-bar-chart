@@ -3,8 +3,8 @@ module.exports = {
   entry: "./src/index.jsx",
   mode: "production",
   output: {
-    path: path.resolve(__dirname, "build"),
-    filename: "index.js",
+    path: path.resolve(__dirname, "umd"),
+    filename: "hsbar.min.js",
     libraryTarget: "commonjs2"
   },
   resolve: {
