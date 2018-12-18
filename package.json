@@ -1,6 +1,6 @@
 {
   "name": "react-horizontal-stacked-bar-chart",
-  "version": "8.12.1",
+  "version": "8.12.2",
   "description": "React horizontal stacked bar responsive chart component",
   "license": "MIT",
   "main": "build/index.js",
