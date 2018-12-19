@@ -22,22 +22,41 @@ npm install react-horizontal-stacked-bar-chart --save
 ```js
 import HSBar from "react-horizontal-stacked-bar-chart";
 
+<h3>Simple</h3>
+<HSBar data={[{ value: 10 }, { value: 20 }]} />
+
+<h3>Complete</h3>
 <HSBar
-  height={30}
+  height={50}
+  legend
+  fontColor="rgb(50,20,100)"
   data={[
-    { name: "Cons", value: 10000, color: "red" },
-    { name: "Pros", value: 5000, color: "blue" }
+    {
+      name: "To pay",
+      value: 80,
+      description: "U$80,00",
+      color: "red"
+    },
+    {
+      name: "Paid",
+      value: 200,
+      description: "U$200,00",
+      color: "rgb(150,150,220)"
+    }
   ]}
-/>;
+/>
 ```
 
 ### Properties
 
+- height: PropTypes.number,
 - data: PropTypes.array.isRequired,
-- height: PropTypes.number
+- legend: PropTypes.bool,
+- fontColor: PropTypes.string
 
 ### Data object list
 
-- name: Required
 - value: Required
-- color: Required
+- name: Optional
+- description: Optional
+- color: Optional
