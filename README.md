@@ -21,11 +21,16 @@ npm install react-horizontal-stacked-bar-chart --save
 
 ```js
 import HSBar from "react-horizontal-stacked-bar-chart";
+```
 
-<h3>Simple</h3>
+Simple
+
+```js
 <HSBar data={[{ value: 10 }, { value: 20 }]} />
+```
+Complete
 
-<h3>Complete</h3>
+```js
 <HSBar
   height={50}
   legend
