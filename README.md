@@ -1,6 +1,6 @@
 [![version](https://img.shields.io/npm/v/react-horizontal-stacked-bar-chart.svg?style=flat-square)](https://www.npmjs.com/package/react-horizontal-stacked-bar-chart)
+[![release](https://img.shields.io/github/release/ricardodorosario/react-horizontal-stacked-bar-chart.svg?style=flat-square)](https://github.com/ricardodorosario/react-horizontal-stacked-bar-chart)
 [![downloads](https://img.shields.io/npm/dt/react-horizontal-stacked-bar-chart.svg?style=flat-square)](https://npm-stat.com/charts.html?package=react-horizontal-stacked-bar-chart&from=2018-12-17)
-[![git-stars](https://img.shields.io/github/stars/ricardodorosario/react-horizontal-stacked-bar-chart.svg?style=flat-square)](https://github.com/ricardodorosario/react-horizontal-stacked-bar-chart)
 [![license](https://img.shields.io/github/license/ricardodorosario/react-horizontal-stacked-bar-chart.svg?style=flat-square)](http://opensource.org/licenses/MIT)
 
 # react-horizontal-stacked-bar-chart
