@@ -5,8 +5,45 @@ export default class HorizontalBar extends Component {
   constructor(props) {
     super(props);
     this.renderBars = this.renderBars.bind(this);
+    this.state = {
+      listBars: this.getListBarWithOtherParameters()
+    };
   }
 
+  /**
+   * Make the calculus of total width
+   */
+  calcWidthTotal() {
+    let widthTotal = 0;
+    this.props.data.forEach(bar => {
+      widthTotal = widthTotal + bar.value;
+    });
+    return widthTotal;
+  }
+
+  /**
+   * Returns the same list of bars with position and barWidth
+   */
+  getListBarWithOtherParameters() {
+    const widthTotal = this.calcWidthTotal();
+    let position = 0;
+    let barWidth = 0;
+
+    const listBars = this.props.data.map(bar => {
+      position = position + barWidth;
+      barWidth = (bar.value * 100) / widthTotal;
+      bar = Object.assign(
+        { position: position, barWidth: barWidth },
+        bar
+      );
+      return bar;
+    });
+    return listBars;
+  }
+
+  /**
+   * Returns a new calculated rgb color
+   */
   randomColor() {
     const r = Math.floor(Math.random() * 255);
     const g = Math.floor(Math.random() * 255);
@@ -15,35 +52,49 @@ export default class HorizontalBar extends Component {
     return `rgb(${r}, ${g}, ${b})`;
   }
 
+  /**
+   * Returns a list of texts of the bars into a div component
+   */
+  getListTextBar() {
+    const listText = this.state.listBars.map(bar => {
+      return (
+        <div
+          style={{
+            position: "relative",
+            float: "left",
+            width: `${bar.barWidth}%`,
+            fontSize: "90%"
+          }}
+        >
+          {bar.name}
+          {bar.name ? ": " : ""}
+          {bar.description || bar.value || ""}
+        </div>
+      );
+    });
+    return listText;
+  }
+
   renderBars() {
     const listBars = [];
-    let widthTotal = 0;
-    let oldWidth = 0;
-    let newWidth = 0;
-
-    this.props.data.forEach(bar => {
-      widthTotal = widthTotal + bar.value;
-    });
 
     listBars.push(
-      this.props.data.map((bar, index) => {
-        oldWidth = oldWidth + newWidth;
-        newWidth = (bar.value * 100) / widthTotal;
+      this.state.listBars.map((bar, index) => {
         return (
           <React.Fragment key={index}>
             <g>
               <rect
-                width={`${newWidth + 0.1}%`}
+                width={`${bar.barWidth + 0.1}%`}
                 height={this.props.height}
                 style={{
                   fill: bar.color || this.randomColor()
                 }}
-                x={`${oldWidth}%`}
+                x={`${bar.position}%`}
               />
-              {this.props.legend && (
+              {this.props.showText && (
                 <text
                   style={{ fill: this.props.fontColor, fontSize: "90%" }}
-                  x={`${oldWidth + 1}%`}
+                  x={`${bar.position + 1}%`}
                   y="50%"
                   dy="0.35em"
                 >
@@ -54,7 +105,7 @@ export default class HorizontalBar extends Component {
               )}
               <title>{`${bar.name || ""}${
                 bar.name ? ": " : ""
-              }${bar.description || bar.value || "1"}`}</title>
+                }${bar.description || bar.value || "1"}`}</title>
             </g>
           </React.Fragment>
         );
@@ -63,24 +114,52 @@ export default class HorizontalBar extends Component {
     return listBars;
   }
 
+  renderText(showText) {
+    if (showText) {
+      return (
+        <div
+          id={`${this.props.id}_text`}
+          style={{
+            textAlign: "left",
+            display: "flex"
+          }}
+        >
+          {this.getListTextBar()}
+        </div>
+      )
+    } else {
+      return null;
+    }
+  }
+
   render() {
     return (
-      <svg width="100%" height={this.props.height}>
-        {this.renderBars()}
-      </svg>
+      <React.Fragment>
+        {this.renderText(this.props.showTextUp)}
+        <svg id={this.props.id} width="100%" height={this.props.height}>
+          {this.renderBars()}
+        </svg>
+        {this.renderText(this.props.showTextDown)}
+      </React.Fragment>
     );
   }
 }
 
 HorizontalBar.propTypes = {
-  height: PropTypes.number,
   data: PropTypes.array.isRequired,
-  legend: PropTypes.bool,
+  id: PropTypes.string,
+  height: PropTypes.number,
+  showText: PropTypes.bool,
+  showTextUp: PropTypes.bool,
+  showTextDown: PropTypes.bool,
   fontColor: PropTypes.string
 };
 
 HorizontalBar.defaultProps = {
   height: 30,
-  legend: false,
-  fontColor: "white"
+  showText: false,
+  showTextUp: false,
+  showTextDown: false,
+  fontColor: "white",
+  id: "hsbar"
 };

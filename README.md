@@ -33,7 +33,10 @@ Complete
 ```js
 <HSBar
   height={50}
-  legend
+  showText
+  showTextUp
+  showTextDown
+  id="new_id"
   fontColor="rgb(50,20,100)"
   data={[
     {
@@ -54,9 +57,12 @@ Complete
 
 ### Properties
 
-- height: PropTypes.number,
 - data: PropTypes.array.isRequired,
-- legend: PropTypes.bool,
+- id: PropTypes.string,
+- height: PropTypes.number,
+- showText: PropTypes.bool,
+- showTextUp: PropTypes.bool,
+- showTextDown: PropTypes.bool,
 - fontColor: PropTypes.string
 
 ### Data object list
