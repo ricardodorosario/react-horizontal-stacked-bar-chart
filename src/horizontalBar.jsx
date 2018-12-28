@@ -6,8 +6,23 @@ export default class HorizontalBar extends Component {
     super(props);
     this.renderBars = this.renderBars.bind(this);
     this.state = {
-      listBars: this.getListBarWithOtherParameters()
+      listBars: [],
+      data: this.props.data
     };
+  }
+
+  shouldComponentUpdate(a) {
+    const difObj = JSON.stringify(this.state.data) !== JSON.stringify(a.data);
+    const length = a.data.length > 0;
+    return difObj && length;
+  }
+
+  componentDidUpdate() {
+    this.setState(state => ({
+      ...state,
+      listBars: this.getListBarWithOtherParameters(),
+      data: this.props.data
+    }))
   }
 
   /**
@@ -28,7 +43,6 @@ export default class HorizontalBar extends Component {
     const widthTotal = this.calcWidthTotal();
     let position = 0;
     let barWidth = 0;
-
     const listBars = this.props.data.map(bar => {
       position = position + barWidth;
       barWidth = (bar.value * 100) / widthTotal;
@@ -56,9 +70,10 @@ export default class HorizontalBar extends Component {
    * Returns a list of texts of the bars into a div component
    */
   getListTextBar() {
-    const listText = this.state.listBars.map(bar => {
+    const listText = this.state.listBars.map((bar, index) => {
       return (
         <div
+          key={index}
           style={{
             position: "relative",
             float: "left",
@@ -81,33 +96,31 @@ export default class HorizontalBar extends Component {
     listBars.push(
       this.state.listBars.map((bar, index) => {
         return (
-          <React.Fragment key={index}>
-            <g>
-              <rect
-                width={`${bar.barWidth + 0.1}%`}
-                height={this.props.height}
-                style={{
-                  fill: bar.color || this.randomColor()
-                }}
-                x={`${bar.position}%`}
-              />
-              {this.props.showText && (
-                <text
-                  style={{ fill: this.props.fontColor, fontSize: "90%" }}
-                  x={`${bar.position + 1}%`}
-                  y="50%"
-                  dy="0.35em"
-                >
-                  {bar.name}
-                  {bar.name ? ": " : ""}
-                  {bar.description || bar.value || "1"}
-                </text>
-              )}
-              <title>{`${bar.name || ""}${
-                bar.name ? ": " : ""
-                }${bar.description || bar.value || "1"}`}</title>
-            </g>
-          </React.Fragment>
+          <g key={index}>
+            <rect
+              width={`${bar.barWidth + 0.1}%`}
+              height={this.props.height}
+              style={{
+                fill: bar.color || this.randomColor()
+              }}
+              x={`${bar.position}%`}
+            />
+            {this.props.showText && (
+              <text
+                style={{ fill: this.props.fontColor, fontSize: "90%" }}
+                x={`${bar.position + 1}%`}
+                y="50%"
+                dy="0.35em"
+              >
+                {bar.name}
+                {bar.name ? ": " : ""}
+                {bar.description || bar.value || "1"}
+              </text>
+            )}
+            <title>{`${bar.name || ""}${
+              bar.name ? ": " : ""
+              }${bar.description || bar.value || "1"}`}</title>
+          </g>
         );
       })
     );
@@ -121,7 +134,8 @@ export default class HorizontalBar extends Component {
           id={`${this.props.id}_text`}
           style={{
             textAlign: "left",
-            display: "flex"
+            display: "flex",
+            width: "100%"
           }}
         >
           {this.getListTextBar()}
