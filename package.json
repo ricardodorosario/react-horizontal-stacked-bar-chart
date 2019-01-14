@@ -19,9 +19,7 @@
   },
   "dependencies": {
     "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-scripts": "2.1.1",
-    "webpack": "^4.27.1"
+    "react-dom": "^16.6.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -35,7 +33,9 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "react-scripts": "2.1.1",
+    "webpack": "^4.27.1"
   },
   "eslintConfig": {
     "extends": "react-app"
