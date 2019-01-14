@@ -1,6 +1,6 @@
 {
   "name": "react-horizontal-stacked-bar-chart",
-  "version": "8.12.7",
+  "version": "8.12.9",
   "description": "React horizontal stacked bar responsive chart component",
   "keywords": [
     "stacked-chart",
@@ -14,13 +14,6 @@
   ],
   "license": "MIT",
   "main": "umd/hsbar.min.js",
-  "peerDependencies": {
-    "react": "^16.6.3"
-  },
-  "dependencies": {
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --watch",
@@ -29,6 +22,14 @@
   "author": {
     "name": "Ricardo do Rosario",
     "email": "ricardorosario20@gmail.com"
+  },
+  "peerDependencies": {
+    "react": "^16.6.3"
+  },
+  "dependencies": {
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

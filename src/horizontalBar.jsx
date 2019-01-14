@@ -1,28 +1,33 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import _ from "lodash";
 
 export default class HorizontalBar extends Component {
   constructor(props) {
     super(props);
-    this.renderBars = this.renderBars.bind(this);
+    //
     this.state = {
       listBars: [],
       data: this.props.data
     };
   }
 
-  shouldComponentUpdate(a) {
-    const difObj = JSON.stringify(this.state.data) !== JSON.stringify(a.data);
-    const length = a.data.length > 0;
-    return difObj && length;
+  componentDidUpdate(prevProps, prevState) {
+    if (!_.isEqual(this.props, prevProps)) {
+      this.setState(state => ({
+        ...state,
+        listBars: this.getListBarWithOtherParameters(),
+        data: this.props.data
+      }));
+    }
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     this.setState(state => ({
       ...state,
       listBars: this.getListBarWithOtherParameters(),
       data: this.props.data
-    }))
+    }));
   }
 
   /**
@@ -46,10 +51,7 @@ export default class HorizontalBar extends Component {
     const listBars = this.props.data.map(bar => {
       position = position + barWidth;
       barWidth = (bar.value * 100) / widthTotal;
-      bar = Object.assign(
-        { position: position, barWidth: barWidth },
-        bar
-      );
+      bar = Object.assign({ position: position, barWidth: barWidth }, bar);
       return bar;
     });
     return listBars;
@@ -119,7 +121,7 @@ export default class HorizontalBar extends Component {
             )}
             <title>{`${bar.name || ""}${
               bar.name ? ": " : ""
-              }${bar.description || bar.value || "1"}`}</title>
+            }${bar.description || bar.value || "1"}`}</title>
           </g>
         );
       })
@@ -140,7 +142,7 @@ export default class HorizontalBar extends Component {
         >
           {this.getListTextBar()}
         </div>
-      )
+      );
     } else {
       return null;
     }

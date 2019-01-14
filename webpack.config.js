@@ -18,7 +18,7 @@ module.exports = {
       {
         test: /.js[x]?$/,
         include: path.resolve(__dirname, "src"),
-        exclude: /(node_modules|bower_components|build)/,
+        exclude: /(node_modules|bower_components|build|umd)/,
         use: {
           loader: "babel-loader",
           options: {
