@@ -28,6 +28,7 @@ Simple
 ```js
 <HSBar data={[{ value: 10 }, { value: 20 }]} />
 ```
+
 Complete
 
 ```js
@@ -57,13 +58,30 @@ Complete
 
 ### Properties
 
-- data: PropTypes.array.isRequired,
-- id: PropTypes.string,
-- height: PropTypes.number,
-- showText: PropTypes.bool,
-- showTextUp: PropTypes.bool,
-- showTextDown: PropTypes.bool,
+- data: PropTypes.array.isRequired
+- id: PropTypes.string
+- height: PropTypes.number
+- showTextWithValue: PropTypes.bool
+- showTextIn: PropTypes.bool
+- showTextUp: PropTypes.bool
+- showTextDown: PropTypes.bool
+- showValueIn: PropTypes.bool
+- showValueUp: PropTypes.bool
+- showValueDown: PropTypes.bool
 - fontColor: PropTypes.string
+
+### Default Properties
+
+- height: 30
+- showTextWithValue: true
+- showTextIn: false
+- showTextUp: false
+- showTextDown: false
+- showValueIn: false
+- showValueUp: false
+- showValueDown: false
+- fontColor: "white"
+- id: "hsbar"
 
 ### Data object list
 

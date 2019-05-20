@@ -71,7 +71,8 @@ export default class HorizontalBar extends Component {
   /**
    * Returns a list of texts of the bars into a div component
    */
-  getListTextBar() {
+  getListTextBar(showTextInsteadValue) {
+    const { showTextWithValue } = this.props;
     const listText = this.state.listBars.map((bar, index) => {
       return (
         <div
@@ -83,9 +84,10 @@ export default class HorizontalBar extends Component {
             fontSize: "90%"
           }}
         >
-          {bar.name}
-          {bar.name ? ": " : ""}
-          {bar.description || bar.value || ""}
+          {showTextInsteadValue && bar.name}
+          {showTextInsteadValue && bar.name && showTextWithValue ? ": " : ""}
+          {(!showTextInsteadValue || showTextWithValue) &&
+            (bar.description || bar.value || "")}
         </div>
       );
     });
@@ -94,6 +96,7 @@ export default class HorizontalBar extends Component {
 
   renderBars() {
     const listBars = [];
+    const { showTextWithValue, showTextIn, showValueIn } = this.props;
 
     listBars.push(
       this.state.listBars.map((bar, index) => {
@@ -107,16 +110,17 @@ export default class HorizontalBar extends Component {
               }}
               x={`${bar.position}%`}
             />
-            {this.props.showText && (
+            {(this.props.showTextIn || this.props.showValueIn) && (
               <text
                 style={{ fill: this.props.fontColor, fontSize: "90%" }}
                 x={`${bar.position + 1}%`}
                 y="50%"
                 dy="0.35em"
               >
-                {bar.name}
-                {bar.name ? ": " : ""}
-                {bar.description || bar.value || "1"}
+                {showTextIn && bar.name}
+                {bar.name && showTextIn ? ": " : ""}
+                {(showValueIn || showTextWithValue) &&
+                  (bar.description || bar.value || "1")}
               </text>
             )}
             <title>{`${bar.name || ""}${
@@ -129,33 +133,31 @@ export default class HorizontalBar extends Component {
     return listBars;
   }
 
-  renderText(showText) {
-    if (showText) {
-      return (
-        <div
-          id={`${this.props.id}_text`}
-          style={{
-            textAlign: "left",
-            display: "flex",
-            width: "100%"
-          }}
-        >
-          {this.getListTextBar()}
-        </div>
-      );
-    } else {
-      return null;
-    }
+  renderLabel(showTextInsteadValue) {
+    return (
+      <div
+        id={`${this.props.id}_text`}
+        style={{
+          textAlign: "left",
+          display: "flex",
+          width: "100%"
+        }}
+      >
+        {this.getListTextBar(showTextInsteadValue)}
+      </div>
+    );
   }
 
   render() {
     return (
       <React.Fragment>
-        {this.renderText(this.props.showTextUp)}
+        {(this.props.showTextUp || this.props.showValueUp) &&
+          this.renderLabel(this.props.showTextUp)}
         <svg id={this.props.id} width="100%" height={this.props.height}>
           {this.renderBars()}
         </svg>
-        {this.renderText(this.props.showTextDown)}
+        {(this.props.showTextDown || this.props.showValueDown) &&
+          this.renderLabel(this.props.showTextDown)}
       </React.Fragment>
     );
   }
@@ -165,17 +167,25 @@ HorizontalBar.propTypes = {
   data: PropTypes.array.isRequired,
   id: PropTypes.string,
   height: PropTypes.number,
-  showText: PropTypes.bool,
+  showTextIn: PropTypes.bool,
   showTextUp: PropTypes.bool,
   showTextDown: PropTypes.bool,
+  showTextWithValue: PropTypes.bool,
+  showValueIn: PropTypes.bool,
+  showValueUp: PropTypes.bool,
+  showValueDown: PropTypes.bool,
   fontColor: PropTypes.string
 };
 
 HorizontalBar.defaultProps = {
   height: 30,
-  showText: false,
+  showTextIn: false,
   showTextUp: false,
   showTextDown: false,
+  showTextWithValue: true,
+  showValueIn: false,
+  showValueUp: false,
+  showValueDown: false,
   fontColor: "white",
   id: "hsbar"
 };
