@@ -34,7 +34,7 @@ Complete
 ```js
 <HSBar
   height={50}
-  showText
+  showTextIn
   showTextUp
   showTextDown
   id="new_id"
