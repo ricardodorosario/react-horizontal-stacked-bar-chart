@@ -53,6 +53,7 @@ Complete
       color: "rgb(150,150,220)"
     }
   ]}
+  onClick={e => console.log(e.bar);}
 />
 ```
 
@@ -69,6 +70,7 @@ Complete
 - showValueUp: PropTypes.bool
 - showValueDown: PropTypes.bool
 - fontColor: PropTypes.string
+- onClick: PropTypes.func
 
 ### Default Properties
 

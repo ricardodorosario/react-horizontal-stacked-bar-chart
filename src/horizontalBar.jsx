@@ -10,6 +10,7 @@ export default class HorizontalBar extends Component {
       listBars: [],
       data: this.props.data
     };
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -58,6 +59,16 @@ export default class HorizontalBar extends Component {
   }
 
   /**
+   * OnClick Event
+   */
+  onClick(evt, bar) {
+    Object.assign(evt, { bar: bar });
+    if (this.props.onClick) {
+      this.props.onClick(evt);
+    }
+  }
+
+  /**
    * Returns a new calculated rgb color
    */
   randomColor() {
@@ -83,6 +94,7 @@ export default class HorizontalBar extends Component {
             width: `${bar.barWidth}%`,
             fontSize: "90%"
           }}
+          onClick={e => this.onClick(e, bar)}
         >
           {showTextInsteadValue && bar.name}
           {showTextInsteadValue && bar.name && showTextWithValue ? ": " : ""}
@@ -101,7 +113,7 @@ export default class HorizontalBar extends Component {
     listBars.push(
       this.state.listBars.map((bar, index) => {
         return (
-          <g key={index}>
+          <g key={index} onClick={e => this.onClick(e, bar)}>
             <rect
               width={`${bar.barWidth + 0.1}%`}
               height={this.props.height}
@@ -174,7 +186,8 @@ HorizontalBar.propTypes = {
   showValueIn: PropTypes.bool,
   showValueUp: PropTypes.bool,
   showValueDown: PropTypes.bool,
-  fontColor: PropTypes.string
+  fontColor: PropTypes.string,
+  onClick: PropTypes.func
 };
 
 HorizontalBar.defaultProps = {
