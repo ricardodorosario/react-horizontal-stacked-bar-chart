@@ -7,6 +7,8 @@
 
 React horizontal stacked bar responsive chart component.
 
+![HSBar Example](https://github.com/ricardodorosario/react-horizontal-stacked-bar-chart/blob/master/images/example.png)
+
 ## Example
 
 [![HSBar](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/9k2jqjr9y)
