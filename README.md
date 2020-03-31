@@ -39,6 +39,8 @@ Complete
   showTextIn
   showTextUp
   showTextDown
+  outlineWidth: {0.5},
+  outlineColor: "black"
   id="new_id"
   fontColor="rgb(50,20,100)"
   data={[
@@ -73,6 +75,8 @@ Complete
 - showValueDown: PropTypes.bool
 - fontColor: PropTypes.string
 - onClick: PropTypes.func
+- outlineWidth: PropTypes.number
+- outlineColor: PropTypes.string
 
 ### Default Properties
 
@@ -85,6 +89,8 @@ Complete
 - showValueUp: false
 - showValueDown: false
 - fontColor: "white"
+- outlineWidth: 0
+- outlineColor: "black"
 - id: "hsbar"
 
 ### Data object list
