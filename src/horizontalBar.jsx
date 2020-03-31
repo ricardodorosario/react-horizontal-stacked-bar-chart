@@ -47,12 +47,17 @@ export default class HorizontalBar extends Component {
    */
   getListBarWithOtherParameters() {
     const widthTotal = this.calcWidthTotal();
-    let position = 0;
+    let position = (this.props.outlineWidth * 2) / 100;
     let barWidth = 0;
     const listBars = this.props.data.map(bar => {
       position = position + barWidth;
-      barWidth = (bar.value * 100) / widthTotal;
-      bar = Object.assign({ position: position, barWidth: barWidth }, bar);
+      barWidth =
+        (bar.value * 100) / widthTotal -
+        (this.props.outlineWidth * 100) / bar.value / 100;
+      bar = Object.assign(
+        { position: position, barWidth: barWidth, widthTotal: widthTotal },
+        bar
+      );
       return bar;
     });
     return listBars;
@@ -118,14 +123,23 @@ export default class HorizontalBar extends Component {
               width={`${bar.barWidth + 0.1}%`}
               height={this.props.height}
               style={{
-                fill: bar.color || this.randomColor()
+                fill: bar.color || this.randomColor(),
+                strokeWidth: `${(this.props.outlineWidth * 100) /
+                  (bar.widthTotal / this.props.data.length)}%`,
+                stroke: this.props.outlineColor
               }}
               x={`${bar.position}%`}
             />
             {(this.props.showTextIn || this.props.showValueIn) && (
               <text
                 style={{ fill: this.props.fontColor, fontSize: "90%" }}
-                x={`${bar.position + 1}%`}
+                x={
+                  this.props.outlineWidth > 0
+                    ? `${bar.position +
+                        (this.props.outlineWidth * 100) /
+                          (bar.widthTotal / this.props.data.length)}%`
+                    : `${bar.position + 1}%`
+                }
                 y="50%"
                 dy="0.35em"
               >
@@ -187,7 +201,9 @@ HorizontalBar.propTypes = {
   showValueUp: PropTypes.bool,
   showValueDown: PropTypes.bool,
   fontColor: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  outlineWidth: PropTypes.number,
+  outlineColor: PropTypes.string
 };
 
 HorizontalBar.defaultProps = {
@@ -199,6 +215,8 @@ HorizontalBar.defaultProps = {
   showValueIn: false,
   showValueUp: false,
   showValueDown: false,
+  outlineWidth: 0,
+  outlineColor: "black",
   fontColor: "white",
   id: "hsbar"
 };
