@@ -12,6 +12,10 @@
     "bar",
     "chart"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ricardodorosario/react-horizontal-stacked-bar-chart.git"
+  },
   "license": "MIT",
   "main": "umd/hsbar.min.js",
   "scripts": {
